@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Малък ЦУМ ул. „Пиротска“ №9</title>
+
+  <!-- Google reCAPTCHA (използва се в контактната форма) -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+  <style>
+    /* Основни стилове за страницата */
+    body { 
+      font-family: 'Georgia', serif; /* основен шрифт */
+      margin:0; padding:0; 
+      line-height:1.6; 
+      color:#3e2723; /* тъмен цвят на текста */
+      background:#fdf6e3; /* светъл фон */
+    }
+
+    /* Хедър с лого и меню */
+    header { 
+      background:#5d4037; /* кафяв фон */
+      color:#fff; /* бял текст */
+      padding:15px 30px; 
+      display:flex; 
+      justify-content:space-between; 
+      align-items:center; 
+      position:sticky; 
+      top:0; 
+      z-index:1000; 
+    }
+    header .logo { 
+      font-size:1.5em; 
+      font-weight:bold; 
+      font-family:'Palatino Linotype', serif; 
+    }
+    header nav a { 
+      color:#fff; 
+      margin-left:20px; 
+      text-decoration:none; 
+      font-weight:500; 
+    }
+    header nav a:hover { 
+      color:#d98833; /* при hover става оранжево */
+    }
+
+    /* Банер */
+    .banner { 
+      background: url('banner.jpg') center/cover no-repeat; 
+      padding:20px 20px; 
+      text-align:center; 
+      color:#a68f7c; /* цвят на текста в банера */
+    }
+    .banner h1 { 
+      font-size:2.5em; 
+      margin-bottom:15px; 
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.6); 
+    }
+    .banner p { 
+      font-size:1.2em; 
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5); 
+    }
+
+    /* Общи секции */
+    .section { 
+      padding:60px 20px; 
+      max-width:1100px; 
+      margin:0 auto; 
+    }
+    .section h2 { 
+      text-align:center; 
+      margin-bottom:40px; 
+      font-size:2em; 
+      color:#6d4c41; 
+    }
+
+    /* Картички с акценти (партер, втори етаж) */
+    .highlights { 
+      display:flex; 
+      gap:30px; 
+      flex-wrap:wrap; 
+      justify-content:center; 
+    }
+    .highlight { 
+      flex:1 1 280px; 
+      background:#fff8f0; 
+      padding:20px; 
+      border-radius:10px; 
+      box-shadow:0 4px 10px rgba(0,0,0,0.1); 
+      transition: transform 0.3s; 
+      text-align:center; 
+    }
+    .highlight:hover { 
+      transform: translateY(-5px); 
+      box-shadow:0 8px 15px rgba(0,0,0,0.15); 
+    }
+
+    /* Контейнер за снимките с carousel ефект */
+    .image-container {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.6s ease-in-out;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
+    .image-container img.active {
+      opacity: 1;
+    }
+
+    /* Точки-индикатори под слайдшоуто */
+    .dots {
+      display:flex;
+      justify-content:center;
+      gap:6px;
+      margin-top:10px;
+    }
+    .dots span {
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#d9c7a3;
+      transition: background 0.3s;
+    }
+    .dots span.active {
+      background:#d98833;
+    }
+
+    /* Галерия */
+    .gallery { 
+      display:flex; 
+      flex-wrap:wrap; 
+      gap:15px; 
+      justify-content:center; 
+    }
+    .gallery img { 
+      width:220px; 
+      height:160px; 
+      object-fit:cover; 
+      border-radius:8px; 
+      transition: transform 0.3s; 
+    }
+    .gallery img:hover { 
+      transform: scale(1.05); 
+    }
+
+    /* Форма */
+    form { 
+      display:flex; 
+      flex-direction:column; 
+      max-width:450px; 
+      margin:0 auto; 
+      gap:15px; 
+    }
+    input, textarea { 
+      padding:12px; 
+      border:1px solid #d98833; 
+      border-radius:6px; 
+      font-size:1em; 
+    }
+    button { 
+      padding:12px; 
+      border:none; 
+      background:#5d4037; 
+      color:#fff; 
+      cursor:pointer; 
+      font-size:1em; 
+      border-radius:6px; 
+      transition: background 0.3s; 
+    }
+    button:hover { 
+      background:#d98833; 
+    }
+
+    /* Футър */
+    footer { 
+      background:#5d4037; 
+      color:#fff; 
+      padding:30px 20px; 
+      text-align:center; 
+      font-size:0.9em; 
+    }
+
+    /* За телефони */
+    @media(max-width:768px){
+      .highlights { flex-direction:column; align-items:center; }
+      header { flex-direction:column; align-items:flex-start; }
+      header nav { margin-top:10px; }
+    }
+.availability {
+  background: #fff3cd; /* светло жълт фон */
+  border: 1px solid #ffeeba;
+  color: #856404;
+  padding: 10px;
+  margin-top: 12px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.95em;
+}
+
+  </style>
+</head>
+<body>
+
+<!-- Хедър -->
+<header>
+  <div class="logo">Малък ЦУМ ул. „Пиротска“ №9</div>
+  <nav>
+    <a href="#home">Начало</a>
+    <a href="#about">За сградата</a>
+    <a href="#shops">Търговски площи</a>
+    <a href="#offices">Офиси под наем</a>
+    <a href="#gallery">Галерия</a>
+    <a href="#contact">Контакти</a>
+  </nav>
+</header>
+
+<!-- Банер -->
+<section class="banner" id="home">
+  <h1>Търговски и офис център Малък ЦУМ</h1>
+  <p>Щандове, самостоятелни обекти и офиси под наем на оживена търговска улица</p>
+</section>
+
+<!-- Снимка на фасадата -->
+<section style="text-align:center; margin:50px auto 10px auto;">
+  <img src="fasada.jpg" alt="Фасадата на Малък ЦУМ" style="width:30%; height:auto; border-radius:5px;">
+</section>
+
+<!-- За сградата -->
+<section class="section" id="about">
+  <h2>За сградата</h2>
+  <p style="text-align:center; font-family:'Georgia', serif; font-size:1.2em; line-height:1.6; color:#a68f7c; max-width:900px; margin:0 auto;">
+    Сградата на ул. „Пиротска“ №9 е построена през 30-те години на миналия век и оттогава остава сърцето на софийската търговия. 
+    През годините тя е била дом на най-големия магазин за детски обувки, оживен закрит базар и сцена за всекидневен пазарен живот. 
+    Днес сградата съчетава минало и настояще: супермаркет Билла, самостоятелни магазинчета, зала с щандове за дрехи и електроника, 
+    Чайна Плаза с разнообразни стоки и офисни пространства, където кипи делови живот – от адвокатски кантори до зъболекарски кабинет.
+  </p>
+</section>
+
+<!-- Търговски площи -->
+<section class="section" id="shops">
+  <h2>Търговски площи</h2>
+
+  <div class="highlights">
+    <div class="highlight">
+      <div class="image-container" data-slides="parter1.jpg,parter2.jpg,parter3.jpg,parter4.jpg,parter5.jpg">
+        <!-- слайдовете се вмъкват автоматично от скрипта долу -->
+      </div>
+      <div class="dots"></div>
+      <h3>Партерен етаж</h3>
+      <p>Щандове за стилни облекла, електроника и полезни битови артикули.</p>
+
+      <!-- Обява за партер -->
+      <div class="availability">
+        <p>В момента няма свободни щандове на партера.</p>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <div class="image-container" data-slides="second1.jpg,second2.jpg,second3.jpg,second4.jpg,second5.jpg">
+        <!-- слайдовете се вмъкват автоматично от скрипта долу -->
+      </div>
+      <div class="dots"></div>
+      <h3>Търговска зона на втория етаж</h3>
+      <p>Дрехи, обувки, бельо, канцеларски материали, аксесоари за телефони и други стоки.</p>
+
+      <!-- Обява за втори етаж -->
+      <div class="availability">
+        <p>В момента няма свободни площи на втория етаж.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Офиси -->
+<section class="section" id="offices">
+  <h2>Офиси под наем</h2>
+
+  <div class="highlights">
+    <div class="highlight" style="flex:1 1 400px; max-width:500px;">
+      <div class="image-container" data-slides="office1.jpg,office2.jpg,office3.jpg,office4.jpg,office5.jpg">
+        <!-- слайдовете се вмъкват автоматично от скрипта долу -->
+      </div>
+      <div class="dots"></div>
+      <p>Етажи 3–5: офиси с удобен достъп. Стандартните офиси са около 14 кв.м., като има и по-големи – най-големият е 350 кв.м.</p>
+
+      <div class="availability" id="offices-availability">
+        В момента няма свободни офиси.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Галерия -->
+<section class="section" id="gallery">
+  <h2>Галерия</h2>
+  <div class="gallery">
+    <img src="gallery1.jpg" alt="Снимка 1">
+    <img src="gallery2.jpg" alt="Снимка 2">
+    <img src="gallery3.jpg" alt="Снимка 3">
+    <img src="gallery4.jpg" alt="Снимка 4">
+  </div>
+</section>
+
+<!-- Контакти -->
+<section class="section" id="contact">
+  <h2>Контакти</h2>
+  <form action="YOUR_FORMSPREE_URL" method="POST">
+    <input type="text" name="name" placeholder="Име" required>
+    <input type="email" name="_replyto" placeholder="Имейл" required>
+    <textarea name="message" placeholder="Съобщение" rows="4" required></textarea>
+    <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div>
+    <button type="submit">Изпрати</button>
+  </form>
+  <div style="margin-top:20px;">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d...YOUR_EMBED_CODE..." width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+</section>
+
+<!-- Футър -->
+<footer>
+  <p>Сградата на ул. „Пиротска“ №9 | Телефон: 0888 123 456 | Имейл: info@targovska.bg</p>
+</footer>
+
+<!-- JavaScript: автоматично сменящо се слайдшоу за всеки .image-container -->
+<script>
+document.querySelectorAll('.image-container').forEach(function (container) {
+  const slides = (container.dataset.slides || '')
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  if (slides.length === 0) return;
+
+  const dotsWrap = container.parentElement.querySelector('.dots');
+
+  // създаваме img таговете динамично
+  slides.forEach(function (src, i) {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = '';
+    if (i === 0) img.classList.add('active');
+    container.appendChild(img);
+
+    if (dotsWrap) {
+      const dot = document.createElement('span');
+      if (i === 0) dot.classList.add('active');
+      dotsWrap.appendChild(dot);
+    }
+  });
+
+  const imgs = container.querySelectorAll('img');
+  const dots = dotsWrap ? dotsWrap.querySelectorAll('span') : [];
+
+  let current = 0;
+  let timer = null;
+
+  function goTo(index) {
+    imgs[current].classList.remove('active');
+    if (dots.length) dots[current].classList.remove('active');
+    current = index;
+    imgs[current].classList.add('active');
+    if (dots.length) dots[current].classList.add('active');
+  }
+
+  function next() {
+    goTo((current + 1) % imgs.length);
+  }
+
+  function start() {
+    if (imgs.length > 1 && !timer) {
+      timer = setInterval(next, 2500); // смяна на всеки 2.5 сек
+    }
+  }
+
+  // автоматично тръгва веднага (работи и на телефон, не само на hover)
+  start();
+
+  // на hover просто спираме за момент, за да може човек да разгледа спокойно
+  container.addEventListener('mouseenter', () => {
+    clearInterval(timer);
+    timer = null;
+  });
+  container.addEventListener('mouseleave', start);
+});
+</script>
+
+</body>
+</html>
